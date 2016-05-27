@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/ystep.css">
+  </head>
+  <body>
+  <!-- ystep容器 -->
+  <div class="ystep"></div>
+  
+  <!-- 引入jquery -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入bootstrap -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- 引入ystep插件 -->
+  <script src="js/ystep.js"></script>
+  <script>
+    $(".ystep").loadStep({steps:["发起","审核","募款","执行"]});
+    // $(".ystep").setStep(2);
+  </script>
+  </body>
+</html>
