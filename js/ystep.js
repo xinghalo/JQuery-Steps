@@ -4,7 +4,7 @@
     loadStep: function(params){
       
       //基础框架
-      var baseHtml =  "<div class='ystep-container'>"+
+      var baseHtml =  "<div class='ystep-container ystep-lg ystep-blue'>"+
                         "<ul class='ystep-container-steps'></ul>"+
                         "<div class='ystep-progress'>"+
                           "<p class='ystep-progress-bar'><span class='ystep-progress-highlight' style='width:0%'></span></p>"+
@@ -40,27 +40,6 @@
         var $stepButtonHtml = $(stepButtonHtml); 
         $ystepContainerSteps.append($stepButtonHtml);
 
-        var stepCount = arrayLength-1;
-        var containerWidth = (stepCount*200+200)+"px";
-        var progressWidth = (stepCount*200)+"px";
-        $baseHtml.css({
-          width: containerWidth,
-          left: "15%"
-        });
-        $baseHtml.find(".ystep-progress").css({
-          width: progressWidth
-        });
-        $baseHtml.find(".ystep-progress-bar").css({
-          width: progressWidth
-        });
-
-        $baseHtml.find(".step-button").css({
-          width:"200px",
-          left:"850px",
-          top:"-85px"
-        });
-        $baseHtml.addClass("ystep-lg"); 
-        $baseHtml.addClass("ystep-blue");
         //插入到容器中
         $n.append($baseHtml);
         //默认执行第一个步骤
@@ -77,7 +56,7 @@
         if(1<=step && step<=$steps.length){
           //更新进度
           var scale = "%";
-          scale = Math.round((step-1)*200/($steps.length-1))+scale;
+          scale = Math.round((step-1)*100/($steps.length-1))+scale;
           $progress.animate({
             width: scale
           },{

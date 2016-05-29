@@ -20,6 +20,7 @@
   width: 700px;
   height: 60px;
   font-size: 18px;
+  left: 15%;
   /*line-height: .3;*/
 }
 
@@ -92,7 +93,64 @@
 }
 .step-button{
   position: relative;
+  top: -85px;
 }
 .step-button button{
   margin: 15px;
+}
+
+/*添加相应式CSS*/
+@media (min-width: 768px) {
+  /*调节总的宽度*/
+  .ystep-lg {
+    width: 400px;
+  }
+  /*调节进度条宽度*/
+  .ystep-lg .ystep-progress, .ystep-lg .ystep-progress-bar {
+    width: 300px;
+  }
+  /*调节各个原点之间的跨度*/
+  .ystep-lg li {
+    margin-right: 0px;
+  }
+  /*调节按钮位置*/
+  .step-button{
+    left: 400px;
+  }
+}
+@media (min-width: 992px) {
+  /*调节总的宽度*/
+  .ystep-lg {
+    width: 600px;
+  }
+  /*调节进度条宽度*/
+  .ystep-lg .ystep-progress, .ystep-lg .ystep-progress-bar {
+    width: 450px;
+  }
+  /*调节各个原点之间的跨度*/
+  .ystep-lg li {
+    margin-right: 50px;
+  }
+  /*调节按钮位置*/
+  .step-button{
+    left: 600px;
+  }
+}
+@media (min-width: 1200px) {
+  /*调节总的宽度*/
+  .ystep-lg {
+    width: 800px;
+  }
+  /*调节进度条宽度*/
+  .ystep-lg .ystep-progress, .ystep-lg .ystep-progress-bar {
+    width: 600px;
+  }
+  /*调节各个原点之间的跨度*/
+  .ystep-lg li {
+    margin-right: 100px;
+  }
+  /*调节按钮位置*/
+  .step-button{
+    left: 800px;
+  }
 }
