@@ -76,36 +76,6 @@
 # 增加上一步下一步校验，待完善
 
 ```
-	$stepWizard.loadStep({
-		steps: ["上传文件","设置数据源","输入设置","检查确认","完成"],
-		prevFunc:function(){
-			var index = $stepWizard.getStep();
-			$stepWizard.prevStep();
-			_afterChange(index-1,index);
-		},
-		nextBtn:function(){
-			var index = $stepWizard.getStep();
-			if(!_beforeChange(index,index+1)){
-				return;
-			}
-			$stepWizard.nextStep();
-			_afterChange(index+1,index);
-		}});
-/*	//绑定上一步事件
-	$prevBtn.click(function(){
-		var index = $stepWizard.getStep();
-		$stepWizard.prevStep();
-		_afterChange(index-1,index);
-	});
-	//绑定下一步事件，需要在跳转前进行安全性检查
-	$nextBtn.click(function(){
-		var index = $stepWizard.getStep();
-		if(!_beforeChange(index,index+1)){
-			return;
-		}
-		$stepWizard.nextStep();
-		_afterChange(index+1,index);
-	});*/
 	//用于定义跳转前的校验
 	var _beforeChange = function(nowIndex,nextIndex){
 

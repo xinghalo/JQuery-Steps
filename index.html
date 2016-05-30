@@ -16,15 +16,43 @@
   <!-- 引入ystep插件 -->
   <script src="js/ystep.js"></script>
   <script>
-    $(".ystep").loadStep({steps:["发起","审核","募款","执行"]});
+    $(".ystep").loadStep({
+      steps:["发起","审核","募款","执行"],
+      beforeChange: function(nowIndex,nextIndex){
+        console.log("跳转前校验:"+nowIndex +" "+nextIndex);
+
+        if(nowIndex === 1 && nextIndex === 2 ){
+          return true;
+        }else if(nowIndex === 2 && nextIndex === 3){
+          return true;
+        }else if(nowIndex === 3 && nextIndex === 4){
+          return true;
+        }
+        return true;
+      },
+      afterChange: function(nowIndex,prevIndex){
+        console.log("跳转后动作:"+nowIndex +" "+prevIndex);
+    
+        if(nowIndex <1 || nowIndex >5) return;
+        
+        /*for(var i = 1; i <= 5; i++){
+          if(i === nowIndex){
+            $("#page"+i).css("display","block");
+          }else{
+            $("#page"+i).css("display","none");
+          }
+        }*/
+        
+        if(nowIndex === 2 && prevIndex === 1){
+          
+        }else if(nowIndex === 3 && prevIndex === 2){
+          
+        }else if(nowIndex === 4 && prevIndex === 3){
+          
+        }
+      }
+    });
     $(".ystep").setStep(3);
-    $(".ystep").setStep(4);
-    $(".ystep").setStep(3);
-    $(".ystep").setStep(2);
-    $(".ystep").setStep(1);
-    $(".ystep").setStep(2);
-    $(".ystep").setStep(3);
-    $(".ystep").setStep(4);
   </script>
   </body>
 </html>

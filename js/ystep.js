@@ -13,8 +13,8 @@
                       "</div>";
       //步骤框架
       var stepHtml = "<li class='ystep-step ystep-step-undone'></li>";
-      var stepButtonHtml = "<div class='step-button'><button type='button' class='btn btn-default nextBtn'>上一步</button>"+
-                        "<button type='button' class='btn btn-default nextBtn'>下一步</button></div>";
+      var stepButtonHtml = "<div class='step-button'><button type='button' class='btn btn-default prevBtn' id='prevBtn'>上一步</button>"+
+                        "<button type='button' class='btn btn-default nextBtn' id='nextBtn'>下一步</button></div>";
 
       //支持填充多个步骤容器
       $(this).each(function(i,n){
@@ -42,6 +42,23 @@
 
         //插入到容器中
         $n.append($baseHtml);
+
+        //绑定两个按钮
+        $("#prevBtn").click(function(){
+          var index = $n.getStep();
+          $n.prevStep();
+          params.afterChange(index-1,index);
+        });
+
+        $("#nextBtn").click(function(){
+          var index = $n.getStep();
+          if(!params.beforeChange(index,index+1)){
+            return;
+          }
+          $n.nextStep();
+          params.afterChange(index+1,index);
+        });
+
         //默认执行第一个步骤
         $n.setStep(1);
       });
