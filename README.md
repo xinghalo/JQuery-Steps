@@ -73,60 +73,43 @@
   }
 }
 ```
-# 增加上一步下一步校验，待完善
+# 增加点击按钮事件，以及校验
 
 ```
-	//用于定义跳转前的校验
-	var _beforeChange = function(nowIndex,nextIndex){
+$(".ystep").loadStep({
+  steps:["发起","审核","募款","执行"],
+  beforeChange: function(nowIndex,nextIndex){
+    console.log("跳转前校验:"+nowIndex +" "+nextIndex);
 
-		console.log("跳转前校验:"+nowIndex +" "+nextIndex);
-		if(nowIndex === 1 && nextIndex === 2 ){
-			return ctrl_fileUploader.canNext();
-		
-		}else if(nowIndex === 2 && nextIndex === 3){
-			return ctrl_sourcetypeSettings.canNext();
-		
-		}else if(nowIndex === 3 && nextIndex === 4){
-			return ctrl_indexPattern.canNext();
-		
-		}
-		
-		return true;
-	}
-	//用于定义跳转后的动作
-	var _afterChange = function(nowIndex,prevIndex){
-		console.log("跳转后动作:"+nowIndex +" "+prevIndex);
-		
-		if(nowIndex <1 || nowIndex >5) return;
-		
-		for(var i = 1; i <= 5; i++){
-			if(i === nowIndex){
-				$("#page"+i).css("display","block");
-			}else{
-				$("#page"+i).css("display","none");
-			}
-		}
-		
-		if(nowIndex === 2 && prevIndex === 1){//从《上传页面》跳转到《数据来源设置》 页面
-			_context.agent.input[0].params = ctrl_fileUploader.getParams();
-			ctrl_sourcetypeSettings.setContext(_context);
-			
-		}else if(nowIndex === 3 && prevIndex === 2){//从《数据来源设置》跳转到《输入设置》 页面
-			_context.agent.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
-			_context.agent.input[0].params.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
-			_context.agent.output[0].params.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
-			_context.agent.input[0].params.charset = ctrl_sourcetypeSettings.getCharset();
-			ctrl_indexPattern.setContext(_context);
-			
-		}else if(nowIndex === 4 && prevIndex === 3){//从《输入设置》跳转到《检查确认》 页面
-			var params = ctrl_indexPattern.getParams();
-			_context.agent.input[0].params.sourceHost = params.sourceHost;
-			_context.agent.output[0].params.index = params.index;
-			_context.agent.output[0].params.indexPattern = params.indexPattern;
-			ctrl_checkingSettings.setContext(_context);
-			
-		}else if(nowIndex === 5 && prevIndex === 4){//从《检查确认》跳转到《完成》 页面
-			ctrl_checkingSettings.upload();
-		}
-	}
+    if(nowIndex === 1 && nextIndex === 2 ){
+      return true;
+    }else if(nowIndex === 2 && nextIndex === 3){
+      return true;
+    }else if(nowIndex === 3 && nextIndex === 4){
+      return true;
+    }
+    return true;
+  },
+  afterChange: function(nowIndex,prevIndex){
+    console.log("跳转后动作:"+nowIndex +" "+prevIndex);
+
+    if(nowIndex <1 || nowIndex >5) return;
+    
+    /*for(var i = 1; i <= 5; i++){
+      if(i === nowIndex){
+        $("#page"+i).css("display","block");
+      }else{
+        $("#page"+i).css("display","none");
+      }
+    }*/
+    
+    if(nowIndex === 2 && prevIndex === 1){
+      
+    }else if(nowIndex === 3 && prevIndex === 2){
+      
+    }else if(nowIndex === 4 && prevIndex === 3){
+      
+    }
+  }
+});
 ```
