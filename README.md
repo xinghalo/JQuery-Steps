@@ -73,3 +73,90 @@
   }
 }
 ```
+# 增加上一步下一步校验，待完善
+
+```
+	$stepWizard.loadStep({
+		steps: ["上传文件","设置数据源","输入设置","检查确认","完成"],
+		prevFunc:function(){
+			var index = $stepWizard.getStep();
+			$stepWizard.prevStep();
+			_afterChange(index-1,index);
+		},
+		nextBtn:function(){
+			var index = $stepWizard.getStep();
+			if(!_beforeChange(index,index+1)){
+				return;
+			}
+			$stepWizard.nextStep();
+			_afterChange(index+1,index);
+		}});
+/*	//绑定上一步事件
+	$prevBtn.click(function(){
+		var index = $stepWizard.getStep();
+		$stepWizard.prevStep();
+		_afterChange(index-1,index);
+	});
+	//绑定下一步事件，需要在跳转前进行安全性检查
+	$nextBtn.click(function(){
+		var index = $stepWizard.getStep();
+		if(!_beforeChange(index,index+1)){
+			return;
+		}
+		$stepWizard.nextStep();
+		_afterChange(index+1,index);
+	});*/
+	//用于定义跳转前的校验
+	var _beforeChange = function(nowIndex,nextIndex){
+
+		console.log("跳转前校验:"+nowIndex +" "+nextIndex);
+		if(nowIndex === 1 && nextIndex === 2 ){
+			return ctrl_fileUploader.canNext();
+		
+		}else if(nowIndex === 2 && nextIndex === 3){
+			return ctrl_sourcetypeSettings.canNext();
+		
+		}else if(nowIndex === 3 && nextIndex === 4){
+			return ctrl_indexPattern.canNext();
+		
+		}
+		
+		return true;
+	}
+	//用于定义跳转后的动作
+	var _afterChange = function(nowIndex,prevIndex){
+		console.log("跳转后动作:"+nowIndex +" "+prevIndex);
+		
+		if(nowIndex <1 || nowIndex >5) return;
+		
+		for(var i = 1; i <= 5; i++){
+			if(i === nowIndex){
+				$("#page"+i).css("display","block");
+			}else{
+				$("#page"+i).css("display","none");
+			}
+		}
+		
+		if(nowIndex === 2 && prevIndex === 1){//从《上传页面》跳转到《数据来源设置》 页面
+			_context.agent.input[0].params = ctrl_fileUploader.getParams();
+			ctrl_sourcetypeSettings.setContext(_context);
+			
+		}else if(nowIndex === 3 && prevIndex === 2){//从《数据来源设置》跳转到《输入设置》 页面
+			_context.agent.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
+			_context.agent.input[0].params.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
+			_context.agent.output[0].params.sourcetype = ctrl_sourcetypeSettings.getSourcetypeName();
+			_context.agent.input[0].params.charset = ctrl_sourcetypeSettings.getCharset();
+			ctrl_indexPattern.setContext(_context);
+			
+		}else if(nowIndex === 4 && prevIndex === 3){//从《输入设置》跳转到《检查确认》 页面
+			var params = ctrl_indexPattern.getParams();
+			_context.agent.input[0].params.sourceHost = params.sourceHost;
+			_context.agent.output[0].params.index = params.index;
+			_context.agent.output[0].params.indexPattern = params.indexPattern;
+			ctrl_checkingSettings.setContext(_context);
+			
+		}else if(nowIndex === 5 && prevIndex === 4){//从《检查确认》跳转到《完成》 页面
+			ctrl_checkingSettings.upload();
+		}
+	}
+```
